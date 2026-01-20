@@ -1,4 +1,6 @@
 from list_demo_data import load_pets
+id_counter = 3
+pets = load_pets()
 
 def print_info():
     print("------------------------------------------------------------")
@@ -9,11 +11,11 @@ def print_info():
     print("5. Išeiti iš programos")
     print("---------------------- Pasirinkite: -------------------------")
 
-def print_pets(pets):
+def print_pets():
     for pet in pets:
         print(f"{pet["id"]}. {pet["name"]} – {pet["species"]}, gimimo metai: {pet["birth_year"]}")
 
-def create_pet(pets, id_counter):
+def create_pet():
     print("Augintinio pridėjimas")
     print("Įveskite vardą:")
     name = input()
@@ -21,6 +23,7 @@ def create_pet(pets, id_counter):
     species = input()
     print("Įveskite gimimo metus:")
     birth_year = int(input())
+    global id_counter
     id_counter += 1
     pet = {
         "id": id_counter,
@@ -29,9 +32,8 @@ def create_pet(pets, id_counter):
         "birth_year": birth_year
     }
     pets.append(pet)
-    return id_counter
 
-def edit_pet(pets):
+def edit_pet():
     print("Augintinio redagavimas")
     print("Įveskite augintinio ID:")
     edit_id = input()
@@ -46,7 +48,7 @@ def edit_pet(pets):
             pet["birth_year"] = int(input())
             break
 
-def remove_pet(pets):
+def remove_pet():
     print("Augintinio šalinimas")
     print("Įveskite augintinio ID:")
     del_id = input()

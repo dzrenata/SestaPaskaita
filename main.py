@@ -1,23 +1,19 @@
-from file_Crud import *
+from file_CRUD import *
 
 # MY PETS CRUD (id, name, species, birth_year)
-
-pets = load_pets()
-
-id_counter = 3
 
 while True:
     print_info()
     įvestis = input()
     match įvestis:
         case "1":
-            print_pets(pets)
+            print_pets()
         case "2":
-            id_counter = create_pet(pets, id_counter)
+             create_pet()
         case "3":
-            edit_pet(pets)
+            edit_pet()
         case "4":
-            remove_pet(pets)
+            remove_pet()
         case "5":
             print("Išeinama iš programos")
             break

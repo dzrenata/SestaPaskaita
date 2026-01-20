@@ -1,7 +1,8 @@
 import csv
 
-headers = ["id", "name", "species", "birth_year"]
+from list_CRUD import id_counter
 
+headers = ["id", "name", "species", "birth_year"]
 def load_pets():
     with open ("my_pets.csv",mode='r', encoding='utf-8') as file:
         return list(csv.DictReader(file))
@@ -11,7 +12,8 @@ def save_pets(pets):
         writer = csv.DictWriter(file,fieldnames=headers)
         writer.writeheader()
         writer.writerows(pets)
-
+pets = load_pets()
+id_counter = int(pets[-1]["id"]) if len(pets) > 0 else 1
 def print_info():
     print("------------------------------------------------------------")
     print("1. Atvaizduoti augintinius")
@@ -21,11 +23,11 @@ def print_info():
     print("5. Išeiti iš programos")
     print("---------------------- Pasirinkite: -------------------------")
 
-def print_pets(pets):
+def print_pets():
     for pet in pets:
         print(f"{pet["id"]}. {pet["name"]} – {pet["species"]}, gimimo metai: {pet["birth_year"]}")
 
-def create_pet(pets, id_counter):
+def create_pet():
     print("Augintinio pridėjimas")
     print("Įveskite vardą:")
     name = input()
@@ -33,7 +35,8 @@ def create_pet(pets, id_counter):
     species = input()
     print("Įveskite gimimo metus:")
     birth_year = int(input())
-    id_counter = int(pets[-1]["id"]) + 1 if len(pets) > 0 else 1
+    global id_counter
+    id_counter +=1
     pet = {
         "id": id_counter,
         "name": name,
@@ -42,9 +45,8 @@ def create_pet(pets, id_counter):
     }
     pets.append(pet)
     save_pets(pets)
-    return id_counter
 
-def edit_pet(pets):
+def edit_pet():
     print("Augintinio redagavimas")
     print("Įveskite augintinio ID:")
     edit_id = input()
@@ -60,7 +62,7 @@ def edit_pet(pets):
             break
     save_pets(pets)
 
-def remove_pet(pets):
+def remove_pet():
     print("Augintinio šalinimas")
     print("Įveskite augintinio ID:")
     del_id = input()
