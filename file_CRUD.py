@@ -1,8 +1,7 @@
 import csv
 
-from list_CRUD import id_counter
-
 headers = ["id", "name", "species", "birth_year"]
+
 def load_pets():
     with open ("my_pets.csv",mode='r', encoding='utf-8') as file:
         return list(csv.DictReader(file))
@@ -14,6 +13,7 @@ def save_pets(pets):
         writer.writerows(pets)
 pets = load_pets()
 id_counter = int(pets[-1]["id"]) if len(pets) > 0 else 1
+
 def print_info():
     print("------------------------------------------------------------")
     print("1. Atvaizduoti augintinius")
@@ -50,6 +50,9 @@ def edit_pet():
     print("Augintinio redagavimas")
     print("Įveskite augintinio ID:")
     edit_id = input()
+
+    found = False
+
     for pet in pets:
         if edit_id == str(pet["id"]):
             print(f"Redaguojamas: {pet["id"]}. {pet["name"]} – {pet["species"]}, gimimo metai: {pet["birth_year"]}")
@@ -59,16 +62,27 @@ def edit_pet():
             pet["species"] = input()
             print("Nauji gimimo metai:")
             pet["birth_year"] = int(input())
+            found = True
             break
-    save_pets(pets)
+    if not found:
+        print("Įrašo su tokiu ID nėra.")
+    else:
+        save_pets(pets)
 
 def remove_pet():
     print("Augintinio šalinimas")
     print("Įveskite augintinio ID:")
     del_id = input()
+
+    found = False
+
     for pet in pets:
         if del_id == str(pet["id"]):
             print(f"Šalinamas: {pet["id"]}. {pet["name"]} – {pet["species"]}, gimimo metai: {pet["birth_year"]}")
             pets.remove(pet)
+            found = True
             break
-    save_pets(pets)
+    if not found:
+        print("Įrašo su tokiu ID nėra.")
+    else:
+        save_pets(pets)

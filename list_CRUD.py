@@ -37,6 +37,9 @@ def edit_pet():
     print("Augintinio redagavimas")
     print("Įveskite augintinio ID:")
     edit_id = input()
+
+    found = False
+
     for pet in pets:
         if edit_id == str(pet["id"]):
             print(f"Redaguojamas: {pet["id"]}. {pet["name"]} – {pet["species"]}, gimimo metai: {pet["birth_year"]}")
@@ -46,14 +49,25 @@ def edit_pet():
             pet["species"] = input()
             print("Nauji gimimo metai:")
             pet["birth_year"] = int(input())
+            found = True
             break
+
+    if not found:
+        print("Įrašo su tokiu ID nėra.")
 
 def remove_pet():
     print("Augintinio šalinimas")
     print("Įveskite augintinio ID:")
     del_id = input()
+
+    found = False
+
     for pet in pets:
         if del_id == str(pet["id"]):
             print(f"Šalinamas: {pet["id"]}. {pet["name"]} – {pet["species"]}, gimimo metai: {pet["birth_year"]}")
             pets.remove(pet)
+            found = True
             break
+
+    if not found:
+        print("Įrašo su tokiu ID nėra.")
